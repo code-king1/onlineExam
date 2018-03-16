@@ -20,7 +20,7 @@ public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static String EDITPG = "/edit.jsp";
 	private static String ADMINPG = "/admin.jsp";
-	private static String WELCMPG = "/welcome.jsp";
+	private static String WELCMPG = "/sysAdmin.jsp";
 	// private static String REGISTPG= "/registration.jsp";
 	private UserDao dao;
 

@@ -6,6 +6,8 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.sjri.onlineExam.entity.College;
+import com.sjri.onlineExam.entity.Company;
 import com.sjri.onlineExam.entity.LoginModel;
 import com.sjri.onlineExam.util.DBUtil;
 
@@ -55,7 +57,7 @@ public class UserDao {
 			if (rs.next()) {
 				user.setUserID(rs.getInt("user_id"));
 				user.setUsername(rs.getString("username"));
-				user.setPsword(rs.getString("pasword"));
+				user.setPsword(rs.getString("password"));
 				user.setEmail(rs.getString("email"));
 			}
 		} catch (SQLException e) {
@@ -68,9 +70,9 @@ public class UserDao {
 	public void createUser(LoginModel user) {
 		try {
 			PreparedStatement ps = conn.prepareStatement("insert into user(username,psword,email) values (?,?,?)");// add
-																														// user
-																														// to
-																														// database
+																													// user
+																													// to
+																													// database
 			ps.setString(1, user.getUsername());
 			ps.setString(2, user.getPsword());
 			ps.setString(3, user.getEmail());
@@ -83,13 +85,13 @@ public class UserDao {
 	// update user with input data
 	public void editAccount(LoginModel user) {
 		try {
-			PreparedStatement ps = conn.prepareStatement("update user set username=?, psword=?" + " where userID=?"); // find
-																															// user
-																															// with
-																															// id
-																															// and
-																															// update
-																															// info
+			PreparedStatement ps = conn.prepareStatement("update user set username=?, psword=?" + " where user_id=?"); // find
+																														// user
+																														// with
+																														// id
+																														// and
+																														// update
+																														// info
 			ps.setString(1, user.getUsername());
 			ps.setString(2, user.getPsword());
 			ps.setInt(3, user.getUserID());
@@ -115,7 +117,7 @@ public class UserDao {
 		List<LoginModel> userList = new ArrayList<LoginModel>();
 		try {
 			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery("select * from TheUser");
+			ResultSet rs = st.executeQuery("select * from user");
 			while (rs.next()) {
 				LoginModel user = new LoginModel();
 				user.setUserID(rs.getInt("userID"));
@@ -136,7 +138,7 @@ public class UserDao {
 	public LoginModel getUserByID(int userid) {
 		LoginModel user = new LoginModel();
 		try {
-			PreparedStatement ps = conn.prepareStatement("select * from TheUser where userID= ?");
+			PreparedStatement ps = conn.prepareStatement("select * from user where user_id= ?");
 			ps.setInt(1, userid);
 			ResultSet rs = ps.executeQuery();
 
@@ -152,4 +154,67 @@ public class UserDao {
 
 		return user;
 	}
+
+	public void saveUser(LoginModel user) {
+		try {
+			PreparedStatement ps = conn
+					.prepareStatement("insert into user(username,psword,email,role,address) values (?,?,?,?,?)");// add
+			// user
+			// to
+			// database
+			ps.setString(1, user.getUsername());
+			ps.setString(2, user.getPsword());
+			ps.setString(3, user.getEmail());
+			ps.setString(4, user.getRole());
+			ps.setString(5, user.getAddress());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public int getLastIdOfCompany() {
+		try {
+			PreparedStatement ps = conn.prepareStatement("select max(id) from company");
+
+			ResultSet rs = ps.executeQuery();
+			if (rs.next())
+				return rs.getInt(0);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+
+	}
+
+	public void saveCompany(Company company) {
+		try {
+			PreparedStatement ps = conn
+					.prepareStatement("insert into company(id,,company_name) values (?,?)");// add
+			// user
+			// to
+			// database
+			ps.setInt(1, company.getId());
+			ps.setString(2, company.getCompanyName());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void saveCollege(College college) {
+		try {
+			PreparedStatement ps = conn
+					.prepareStatement("insert into college(id,,college_name) values (?,?)");// add
+			// user
+			// to
+			// database
+			ps.setInt(1, college.getId());
+			ps.setString(2, college.getCollegeName());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

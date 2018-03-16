@@ -39,6 +39,10 @@
 
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
+					<a type="button" class="btn btn-link" href="register.jsp"><span
+						class="glyphicon glyphicon glyphicon-user"></span>Sign up</a>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
 					<a type="button" class="btn btn-link" data-toggle="modal"
 						data-target="#myModal"><span
 						class="glyphicon glyphicon-log-in"></span>Login</a>
@@ -64,12 +68,12 @@
 						<div class="form-group">
 							<label class="sr-only" for="email">Email:</label> <input
 								type="email" class="form-control" id="email"
-								placeholder="Enter email" name="psword">
+								placeholder="Enter email" name="email">
 						</div>
 						<div class="form-group">
 							<label class="sr-only" for="pwd">Password:</label> <input
 								type="password" class="form-control" id="pwd"
-								placeholder="Enter password" name="pwd">
+								placeholder="Enter password" name="psword">
 						</div>
 						<div class="checkbox">
 							<label><input type="checkbox" name="remember">
@@ -86,7 +90,53 @@
 		</div>
 	</div>
 
+	<!-- Modal -->
+	<div class="modal fade" id="registerModal" role="dialog">
+		<div class="modal-dialog">
 
+			<!-- Modal content-->
+
+			<div class="modal-content">
+				<div></div>
+				<div class="modal-header"></div>
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Sign up</h4>
+				</div>
+				<div class="modal-body">
+					<form action="Login" method="post" id="userform">
+						<div class="form-group">
+							<label class="sr-only" for="email">Login As:</label> <select
+								class="selectpicker">
+								<option title="Student" value="student"></option>
+								<option title="Company"></option>
+							</select>
+
+						</div>
+						<div class="form-group">
+							<label class="sr-only" for="email">Email:</label> <input
+								type="email" class="form-control" id="email"
+								placeholder="Enter email" name="email">
+						</div>
+						<div class="form-group">
+							<label class="sr-only" for="pwd">Password:</label> <input
+								type="password" class="form-control" id="pwd"
+								placeholder="Enter password" name="psword">
+						</div>
+						<div class="checkbox">
+							<label><input type="checkbox" name="remember">
+								Remember me</label>
+						</div>
+						<button type="submit" class="btn btn-default">Submit</button>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
 	<div class="jumbotron text-center">
 		<!-- Modal -->
 		<div class="modal fade" id="myModal" role="dialog">
