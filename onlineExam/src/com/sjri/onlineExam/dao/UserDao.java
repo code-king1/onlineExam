@@ -157,8 +157,8 @@ public class UserDao {
 
 	public void saveUser(LoginModel user) {
 		try {
-			PreparedStatement ps = conn
-					.prepareStatement("insert into user(username,psword,email,role,address) values (?,?,?,?,?)");// add
+			PreparedStatement ps = conn.prepareStatement(
+					"insert into user(username,password,email,role,address,company_or_college_id) values (?,?,?,?,?,?)");// add
 			// user
 			// to
 			// database
@@ -167,6 +167,7 @@ public class UserDao {
 			ps.setString(3, user.getEmail());
 			ps.setString(4, user.getRole());
 			ps.setString(5, user.getAddress());
+			ps.setInt(6, user.getCompanyOrCollegeId());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -179,7 +180,7 @@ public class UserDao {
 
 			ResultSet rs = ps.executeQuery();
 			if (rs.next())
-				return rs.getInt(0);
+				return rs.getInt(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -189,8 +190,7 @@ public class UserDao {
 
 	public void saveCompany(Company company) {
 		try {
-			PreparedStatement ps = conn
-					.prepareStatement("insert into company(id,,company_name) values (?,?)");// add
+			PreparedStatement ps = conn.prepareStatement("insert into company(id,company_name) values (?,?)");// add
 			// user
 			// to
 			// database
@@ -204,8 +204,7 @@ public class UserDao {
 
 	public void saveCollege(College college) {
 		try {
-			PreparedStatement ps = conn
-					.prepareStatement("insert into college(id,,college_name) values (?,?)");// add
+			PreparedStatement ps = conn.prepareStatement("insert into college(id,,college_name) values (?,?)");// add
 			// user
 			// to
 			// database
@@ -215,6 +214,52 @@ public class UserDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public int getLastIdOfCollege() {
+		try {
+			PreparedStatement ps = conn.prepareStatement("select max(id) from college");
+
+			ResultSet rs = ps.executeQuery();
+			if (rs.next())
+				return rs.getInt(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+
+	}
+
+	public int isCompanyExist(String companyName) {
+
+		// Search database for email and password and return true if found
+		try {
+			PreparedStatement ps = conn.prepareStatement("select id from company where company_name=?");
+			ps.setString(1, companyName);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next())
+				return rs.getInt(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return 0;
+	}
+
+	public int isCollegeExist(String collegeName) {
+
+		// Search database for email and password and return true if found
+		try {
+			PreparedStatement ps = conn.prepareStatement("select id from college where college_name=?");
+			ps.setString(1, collegeName);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next())
+				return rs.getInt(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return 0;
 	}
 
 }

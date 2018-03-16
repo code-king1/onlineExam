@@ -7,6 +7,7 @@ public class LoginModel {
 	private String email;
 	private String psword;
 	private String role;
+	private int companyOrCollegeId;
 	private String address;
 
 	public int getUserID() {
@@ -55,6 +56,20 @@ public class LoginModel {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public int getCompanyOrCollegeId() {
+		return companyOrCollegeId;
+	}
+
+	public void setCompanyOrCollegeId(int companyOrCollegeId) {
+		this.companyOrCollegeId = companyOrCollegeId;
+	}
+
+	@Override
+	public String toString() {
+		return "LoginModel [userID=" + userID + ", username=" + username + ", email=" + email + ", psword=" + psword
+				+ ", role=" + role + ", companyOrCollegeId=" + companyOrCollegeId + ", address=" + address + "]";
 	}
 
 }

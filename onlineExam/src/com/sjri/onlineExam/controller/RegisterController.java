@@ -3,6 +3,7 @@ package com.sjri.onlineExam.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,7 +37,7 @@ public class RegisterController extends HttpServlet {
 
 		System.out.println("Register Type : " + registerType);
 		String password = request.getParameter("pass");
-		String confirmPass = request.getParameter("confirmPass");
+		String confirmPass = request.getParameter("confirmpass");
 		if (!password.equals(confirmPass))
 			pwOut.println("Error");
 		if (AppConstant.COMPANY.equals(registerType)) {
@@ -45,17 +46,23 @@ public class RegisterController extends HttpServlet {
 			String email = request.getParameter("email");
 			String address = request.getParameter("address");
 
+			int companyId = dao.isCompanyExist(companyName);
+			if (companyId == 0) {
+				Company company = new Company();
+				companyId = dao.getLastIdOfCompany() + 1;
+				company.setCompanyName(companyName);
+				company.setId(companyId + 1);
+				dao.saveCompany(company);
+			}
+
 			user.setAddress(address);
 			user.setRole(AppConstant.COMPANY);
 			user.setEmail(email);
 			user.setUsername(username);
 			user.setPsword(password);
+
+			user.setCompanyOrCollegeId(companyId);
 			dao.saveUser(user);
-			int companyId = dao.getLastIdOfCompany();
-			Company company = new Company();
-			company.setCompanyName(companyName);
-			company.setId(companyId);
-			dao.saveCompany(company);
 
 			// save company and company user details
 		} else {
@@ -64,18 +71,29 @@ public class RegisterController extends HttpServlet {
 			String email = request.getParameter("email");
 			String address = request.getParameter("address");
 
+			int collegeId = dao.isCollegeExist(collegeName);
+			if (collegeId == 0) {
+				College college = new College();
+				 collegeId = dao.getLastIdOfCollege() + 1;
+				college.setCollegeName(collegeName);
+				college.setId(collegeId);
+				dao.saveCollege(college);
+			}
 			user.setAddress(address);
 			user.setRole(AppConstant.STUDENT);
 			user.setEmail(email);
 			user.setUsername(username);
 			user.setPsword(password);
+			
+			user.setCompanyOrCollegeId(collegeId);
 			dao.saveUser(user);
-			int companyId = dao.getLastIdOfCompany();
-			College college = new College();
-			college.setCollegeName(collegeName);
-			college.setId(companyId);
-			dao.saveCollege(college);
+
 		}
+
+		RequestDispatcher view = request.getRequestDispatcher("/home.jsp");
+		view.forward(request, response);
+
+	
 		// }
 
 	}

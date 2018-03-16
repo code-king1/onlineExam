@@ -15,12 +15,12 @@
 $(document).ready(function(){
         var selected = $(".registerForm option:selected").val();
         if(selected=='Company'){
-		 $("#name").text("Company Owner Name");
+		 $("#username").text("Company Owner Name");
 		$("#companyOrCollegeName").text("Company Name");
 		 }
 		 else
 		 {
-		  $("#name").text("Student Name");
+		  $("#username").text("Student Name");
 		 $("#companyOrCollegeName").text("College Name ");
 		 }
     });
@@ -30,12 +30,12 @@ $(document).ready(function(){
     $("select.registerForm").change(function(){
         var selected = $(".registerForm option:selected").val();
 		   if(selected=='Company'){
-		 $("#name").text("Company Owner Name");
+		 $("#username").text("Company Owner Name");
 		$("#companyOrCollegeName").text("Company Name");
 		 }
 		 else
 		 {
-		  $("#name").text("Student Name");
+		  $("#username").text("Student Name");
 		 $("#companyOrCollegeName").text("College Name ");
 		 }
     });
@@ -95,11 +95,11 @@ width: 48%;
 </div>
 <div class="form-group">
 <label id="companyOrCollegeName"></label>
-<input type="text" name="name" class="form-control text" placeholder="enter name" >
+<input type="text"  class="form-control text" name="companyOrCollegeName" placeholder="enter name" >
 </div>
 <div class="form-group">
 <label id="username"></label>
-<input type="text" name="name" class="form-control text" placeholder="enter user name " >
+<input type="text" name="username" class="form-control text" placeholder="enter user name " >
 </div>
 <div class="form-group">
 <label>Email</label>
